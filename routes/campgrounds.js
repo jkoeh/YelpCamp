@@ -13,24 +13,29 @@ router.get("/", function(req, res) {
   });
 });
 //create route
-router.post("/", function(req, res) {
+router.post("/", isLoggedIn, function(req, res) {
   //get data from form and add to campgrounds array
   var newCampground = {
     name: req.body.name,
     image: req.body.image,
-    description: req.body.description
-  };
+    description: req.body.description,
+    author: {
+      id: req.user._id,
+      username: req.user.username
+    }    
+  };  
+  console.log("username: "+ req.user.username)
   Campground.create(newCampground, function(err, campground) {
     if (err) {
       console.log(err);
     } else {
-      console.log(campground + " is created");
+      console.log(campground + " is created");     
       res.redirect("/");
     }
   });
 });
 //new route
-router.get("/new", function(req, res) {
+router.get("/new", isLoggedIn,function(req, res) {
   res.render("campgrounds/new");
 });
 //SHOW
@@ -41,10 +46,16 @@ router.get("/:id", function(req, res) {
       if (err) {
         console.log(err);
       } else {
-        console.log(foundCampground);
+        console.log(foundCampground);       
         res.render("campgrounds/show", { campground: foundCampground });
       }
     });
 });
-
+//middleware
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
 module.exports = router;

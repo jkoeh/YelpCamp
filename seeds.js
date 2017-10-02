@@ -23,44 +23,45 @@ function seedDB() {
   Campground.remove({}, function(err) {
     if (err) {
       console.log(err);
-    } else {
-      console.log("removed campgrounds!");
-      Comment.remove({}, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("removed comment!");
-          data.forEach(function(seed) {
-            Campground.create(seed, function(err, campground) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log("Added: " + campground.name);
-                Comment.create(
-                  {
-                    author: "jkoeh",
-                    text: "Great place"
-                  },
-                  function(err, comment) {
-                    if (err) {
-                      console.log(err);
-                    } else {                                            
-                      campground.comments.push(comment);                      
-                      campground.save(function(err, data) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                          console.log("Comment Created by " +comment.author);
-                        }
-                      });
-                    }
-                  }
-                );
-              }
-            });
-          });
-        }
-      });
+    // } else {
+    //   console.log("removed campgrounds!");
+    //   Comment.remove({}, function(err) {
+    //     if (err) {
+    //       console.log(err);
+    //     } else {
+    //       console.log("removed comment!");
+    //       data.forEach(function(seed) {
+    //         Campground.create(seed, function(err, campground) {
+    //           if (err) {
+    //             console.log(err);
+    //           } else {
+    //             console.log("Added: " + campground.name);
+    //             Comment.create(
+    //               {
+    //                 author: "jkoeh",
+    //                 text: "Great place"
+    //               },
+    //               function(err, comment) {
+    //                 if (err) {
+    //                   console.log(err);
+    //                 } else {                                            
+    //                   campground.comments.push(comment);                      
+    //                   campground.save(function(err, data) {
+    //                     if (err) {
+    //                         console.log(err);
+    //                     } else {
+    //                       console.log("Comment Created by " +comment.author);
+    //                     }
+    //                   });
+    //                 }
+    //               }
+    //             );
+    //           }
+    //         });
+    //       });
+    //     }
+    //   });
+    // }
     }
   });
   //add a few campgrounds
