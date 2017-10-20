@@ -47,6 +47,6 @@ app.use(indexRoutes);
 app.use("/campgrounds", campgroundsRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.listen("8080", "127.0.0.1", function() {
+app.listen(process.env.PORT, function() {
   console.log("Server started");
 });
